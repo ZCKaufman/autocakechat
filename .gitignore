@@ -131,8 +131,9 @@ dmypy.json
 # Autocakechat files
 server_id
 corpus/
-results/
+results.nosync/
+tg_data/
 
 # macOS files
 .DS_Store
-
+*.swp

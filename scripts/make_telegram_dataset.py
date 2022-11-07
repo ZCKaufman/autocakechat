@@ -1,12 +1,13 @@
-from TelegramDataset import TelegramDataset
+import os
 import json
+from TelegramDataset import TelegramDataset
 
-SERVER_ID = "REPLACE ME"
+SERVER_ID = os.environ["AC_TSERVERID"]
 
 if __name__ == "__main__":
     # Import JSON chatlog exported from Telegram
     # Treat the user######## as the server/bot
-    dataset = TelegramDataset("corpus/", SERVER_ID)
+    dataset = TelegramDataset("tg_data/", SERVER_ID)
     print(f"Imported {len(dataset.data)} client-server pairs from {len(dataset.corpus)} files")
 
     # Convert to cakechat format
@@ -20,9 +21,13 @@ if __name__ == "__main__":
             lines.append(line)
 
     # Export
-    with open("train_processed_dialogs.txt", "w") as file:
+    if not os.path.exists("corpus/"):
+        os.makedirs("corpus/")
+
+    with open("corpus/train_processed_dialogs.txt", "w") as file:
         for line in lines:
             json_str = json.dumps(line)
             file.write(json_str + "\n")
 
     exit()
+
